@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/2023-07-otus-groovy-Kovalenko-new.iml" filepath="$PROJECT_DIR$/.idea/2023-07-otus-groovy-Kovalenko-new.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/otus_test.iml" filepath="$PROJECT_DIR$/.idea/modules/otus_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/otus_test.main.iml" filepath="$PROJECT_DIR$/.idea/modules/otus_test.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/otus_test.test.iml" filepath="$PROJECT_DIR$/.idea/modules/otus_test.test.iml" />
+    </modules>
+  </component>
+</project>
