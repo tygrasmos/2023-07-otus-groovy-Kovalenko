@@ -28,4 +28,12 @@ class Denomination {
     @Column(name = "denomination")
     Integer denomination
 
+    Denomination(Long id, Integer denomination) {
+        this.id = id
+        this.denomination = denomination
+    }
+
+    Denomination() {
+
+    }
 }

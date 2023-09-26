@@ -36,4 +36,13 @@ class Banknote {
     @JoinColumn(name = "denomination_id")
     Denomination denomination
 
+    Banknote(Long id, Currency currency, Denomination denomination) {
+        this.id = id
+        this.currency = currency
+        this.denomination = denomination
+    }
+
+    Banknote() {
+
+    }
 }

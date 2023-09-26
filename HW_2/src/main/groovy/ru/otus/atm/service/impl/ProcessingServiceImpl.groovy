@@ -48,7 +48,7 @@ class ProcessingServiceImpl implements ProcessingService{
                         banknotes.forEach(
                                 { b ->
                                     if (cb.getBanknote() == b) {
-                                        cashBoxesFromSave = cb + 1
+                                        cashBoxesFromSave.add(plusCashBox(cb, 1))
                                     }
                                 })
                     })
@@ -60,7 +60,7 @@ class ProcessingServiceImpl implements ProcessingService{
     }
 
     /** Получим все ячейки с купюрами для данной валюты */
-    private List<CashBox> getCashBoxes(String currencyIdent){
+    List<CashBox> getCashBoxes(String currencyIdent){
         cashBoxService.findAll().stream()
                 .filter(
                         {
@@ -71,8 +71,8 @@ class ProcessingServiceImpl implements ProcessingService{
     }
 
     /** Проверим что заданная сумма в заданной валюте есть в банкомате */
-    private static boolean isThereRequiredAmount(Long amount, List<CashBox> cashBoxesWithCurrentCurrency){
-        Long summ
+    static boolean isThereRequiredAmount(Long amount, List<CashBox> cashBoxesWithCurrentCurrency){
+        Long summ = 0L
         cashBoxesWithCurrentCurrency.forEach(
                 {
                     summ += (Long) (it.getBanknote().getDenomination().getDenomination() * it.getQuantity())
@@ -81,7 +81,7 @@ class ProcessingServiceImpl implements ProcessingService{
     }
 
     /** Получим нужное количество банкнот для выдачи */
-    private static List<Banknote> receiveAmountInBanknotes(Long amount, List<CashBox> cashBoxes){
+    static List<Banknote> receiveAmountInBanknotes(Long amount, List<CashBox> cashBoxes){
         List<Banknote> banknoteList = new ArrayList<>()
         List<CashBox> cashBoxesFromSave = new ArrayList<>()
         Long remains = amount
@@ -92,17 +92,17 @@ class ProcessingServiceImpl implements ProcessingService{
                     if(banknoteQuantity < 0){
                         addBanknotesFromReceive(banknoteList, it, requiredBanknoteQuantity + banknoteQuantity)
                         remains = remains - (requiredBanknoteQuantity + banknoteQuantity) * it.getBanknote().getDenomination().getDenomination()
-                        CashBox cashBoxFromSave = it - (requiredBanknoteQuantity + banknoteQuantity)
+                        CashBox cashBoxFromSave = minusCashBox(it, (requiredBanknoteQuantity + banknoteQuantity))
                         cashBoxesFromSave.add(cashBoxFromSave)
                     } else {
                         addBanknotesFromReceive(banknoteList, it, requiredBanknoteQuantity)
                         remains = remains - (requiredBanknoteQuantity) * it.getBanknote().getDenomination().getDenomination()
-                        CashBox cashBoxFromSave = it - requiredBanknoteQuantity
+                        CashBox cashBoxFromSave = minusCashBox(it, requiredBanknoteQuantity)
                         cashBoxesFromSave.add(cashBoxFromSave)
                     }
                 })
         if(isAmountEqualBanknoteAmount(banknoteList, amount)){
-            saveCashBoxes(cashBoxesFromSave)
+         //   saveCashBoxes(cashBoxesFromSave)
             banknoteList
         } else {
             throw new ProcessingException("Невозможно выдать заданную сумму.")
@@ -110,40 +110,35 @@ class ProcessingServiceImpl implements ProcessingService{
     }
 
     /** Проверим хватит ли купюр в банкомате для выдачи */
-    private static Integer getBanknoteShortageQuantity(Integer requiredBanknoteQuantity, Integer stockBanknoteQuantity){
+    static Integer getBanknoteShortageQuantity(Integer requiredBanknoteQuantity, Integer stockBanknoteQuantity){
         stockBanknoteQuantity - requiredBanknoteQuantity
     }
 
     /** Добавим нужное количество банктон данного номинала в список выдачи */
-    private static void addBanknotesFromReceive(List<Banknote> banknoteList, CashBox cashBox, Integer banknoteQuantity){
-        for (int i; i <= banknoteQuantity; i++) {
+    static void addBanknotesFromReceive(List<Banknote> banknoteList, CashBox cashBox, Integer banknoteQuantity){
+        for (int i; i < banknoteQuantity; i++) {
             banknoteList.add(cashBox.getBanknote())
         }
     }
 
     /** переопределим оператор - */
-    static def minus(CashBox x1, Integer quantity){
+    static def minusCashBox(CashBox x1, Integer quantity){
         new CashBox(x1.getId(), x1.getBanknote(), x1.getQuantity() - quantity)
     }
 
     /** переопределим оператор + */
-    static def plus(CashBox x1, Integer quantity){
+    static def plusCashBox(CashBox x1, Integer quantity){
         new CashBox(x1.getId(), x1.getBanknote(), x1.getQuantity() + quantity)
     }
 
     /** Проверим что необходимую сумму сожно выдать существующими купюрами */
-    private static boolean isAmountEqualBanknoteAmount(List<Banknote> banknoteList, Long amount){
-        Long summ
-        banknoteList.forEach(
-                {
-                    summ += (Long) it.denomination.getDenomination()
-                })
-        summ == amount
+    static boolean isAmountEqualBanknoteAmount(List<Banknote> banknoteList, Long amount){
+        getAmountByBanknotes(banknoteList) == amount
     }
 
     /** Получим сумму для зачисления на счет */
-    private static Long getAmountByBanknotes(List<Banknote> banknoteList){
-        Long summ
+    static Long getAmountByBanknotes(List<Banknote> banknoteList){
+        Long summ = 0L
         banknoteList.forEach(
                 {
                     summ += (Long) it.denomination.getDenomination()
@@ -153,7 +148,7 @@ class ProcessingServiceImpl implements ProcessingService{
 
     /** Получим максимальное количество данной купюры для выдачи */
     static Integer getQuantity(Long value, Integer nominal){
-        value % nominal
+        value.intdiv(nominal)
     }
 
     /** Сохраним обновленную информацию о количестве купюр в банкомате */

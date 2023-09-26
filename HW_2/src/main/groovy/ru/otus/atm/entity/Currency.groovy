@@ -31,4 +31,13 @@ class Currency {
     @Column(name = "currency_ident")
     String currencyIdent
 
+    Currency(Long id, String currencyName, String currencyIdent) {
+        this.id = id
+        this.currencyName = currencyName
+        this.currencyIdent = currencyIdent
+    }
+
+    Currency() {
+
+    }
 }
