@@ -1,5 +1,6 @@
 package ru.otus.atm.entity
 
+import groovy.transform.Canonical
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
@@ -15,9 +16,10 @@ import javax.persistence.SequenceGenerator
 import javax.persistence.Table
 
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+@Canonical
 @Entity
 @Table(name = "cash_box")
 @SequenceGenerator(name = "main_seq_gen", sequenceName = "MAIN_SEQUENCE", initialValue = 1000000, allocationSize = 1)
@@ -43,6 +45,14 @@ class CashBox {
 
     CashBox() {
 
+    }
+
+    CashBox plus(Integer value){
+        new CashBox(this.id, this.banknote, this.quantity + value)
+    }
+
+    CashBox minus(Integer value){
+        new CashBox(this.id, this.banknote, this.quantity - value)
     }
 }
 

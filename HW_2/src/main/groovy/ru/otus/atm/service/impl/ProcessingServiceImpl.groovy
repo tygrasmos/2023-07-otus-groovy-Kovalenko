@@ -48,7 +48,8 @@ class ProcessingServiceImpl implements ProcessingService{
                         banknotes.forEach(
                                 { b ->
                                     if (cb.getBanknote() == b) {
-                                        cashBoxesFromSave.add(plusCashBox(cb, 1))
+                                        //cashBoxesFromSave.add(plusCashBox(cb, 1))
+                                        cashBoxesFromSave.add(cb + 1)
                                     }
                                 })
                     })
@@ -92,12 +93,14 @@ class ProcessingServiceImpl implements ProcessingService{
                     if(banknoteQuantity < 0){
                         addBanknotesFromReceive(banknoteList, it, requiredBanknoteQuantity + banknoteQuantity)
                         remains = remains - (requiredBanknoteQuantity + banknoteQuantity) * it.getBanknote().getDenomination().getDenomination()
-                        CashBox cashBoxFromSave = minusCashBox(it, (requiredBanknoteQuantity + banknoteQuantity))
+                        //CashBox cashBoxFromSave = minusCashBox(it, (requiredBanknoteQuantity + banknoteQuantity))
+                        CashBox cashBoxFromSave = it - (requiredBanknoteQuantity + banknoteQuantity)
                         cashBoxesFromSave.add(cashBoxFromSave)
                     } else {
                         addBanknotesFromReceive(banknoteList, it, requiredBanknoteQuantity)
                         remains = remains - (requiredBanknoteQuantity) * it.getBanknote().getDenomination().getDenomination()
-                        CashBox cashBoxFromSave = minusCashBox(it, requiredBanknoteQuantity)
+                        //CashBox cashBoxFromSave = minusCashBox(it, requiredBanknoteQuantity)
+                        CashBox cashBoxFromSave = it - requiredBanknoteQuantity
                         cashBoxesFromSave.add(cashBoxFromSave)
                     }
                 })
