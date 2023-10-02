@@ -10,4 +10,5 @@ class Task {
     String taskDescription
     Long taskDuration
     List<Action> actionList
+
 }

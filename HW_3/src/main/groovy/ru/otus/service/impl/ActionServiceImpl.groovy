@@ -1,10 +1,12 @@
 package ru.otus.service.impl
 
+import org.springframework.stereotype.Service
 import ru.otus.model.Action
 import ru.otus.service.ActionService
 
 import java.time.LocalDateTime
 
+@Service
 class ActionServiceImpl implements ActionService{
 
 
