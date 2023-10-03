@@ -9,13 +9,13 @@ import java.time.LocalDateTime
 @Service
 class TaskServiceImpl implements TaskService{
 
+    TaskServiceImpl(){
+
+    }
+
     @Override
     Task create(Task task) {
-        if(validate(task)){
-            return save(task)
-        } else {
-            throw new RuntimeException("Выберите другое время выполнения задачи.")
-        }
+        return null
     }
 
     @Override
@@ -37,16 +37,5 @@ class TaskServiceImpl implements TaskService{
     def delete(Task task) {
         return null
     }
-
-    Boolean validate(Task task){
-        def startTime = task.getDateTimeStartTask()
-        def endTime = task.getDateTimeEndTask()
-        getAll().findAll() {
-            it.getDateTimeStartTask() <= startTime
-            it.getDateTimeEndTask() >= endTime
-        }.collect().size() == 0
-    }
-
-
 
 }

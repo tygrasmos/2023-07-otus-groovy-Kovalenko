@@ -14,5 +14,5 @@ interface TaskService {
 
     Task update(Task task)
 
-    delete(Task task)
+    def delete(Task task)
 }

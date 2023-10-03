@@ -8,5 +8,4 @@ class Action {
     LocalDateTime dateTimeEndAction
     Long actionDuration
     String actionName
-
 }

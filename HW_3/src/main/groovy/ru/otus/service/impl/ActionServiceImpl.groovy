@@ -9,6 +9,9 @@ import java.time.LocalDateTime
 @Service
 class ActionServiceImpl implements ActionService{
 
+    ActionServiceImpl(){
+
+    }
 
     @Override
     Action create(Action action) {
@@ -32,6 +35,11 @@ class ActionServiceImpl implements ActionService{
 
     @Override
     def delete(Action action) {
+        return null
+    }
+
+    @Override
+    def deleteAll(List<Action> actions) {
         return null
     }
 }

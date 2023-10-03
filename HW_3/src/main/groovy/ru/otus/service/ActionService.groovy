@@ -14,6 +14,8 @@ interface ActionService {
 
     Action update(Action action)
 
-    delete(Action action)
+    def delete(Action action)
+
+    def deleteAll(List<Action> actions)
 
 }
