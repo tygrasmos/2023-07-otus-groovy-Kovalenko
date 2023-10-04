@@ -35,7 +35,8 @@ class CalendarServiceImplTest {
 
     @Test
     void validationOfTheTimePeriodActionMustBeCorrect(){
-        Action testAction = getAction()
+        Action testAction = getAction('Разрядка', LocalDateTime.of(YEAR, MONTH, DAY, HOUR_1, MINUTE_3),
+                LocalDateTime.of(YEAR, MONTH, DAY, HOUR_2, MINUTE_2))
         List<Action> existActions = getActions(1)
         assert CalendarServiceImpl.validateAction(testAction, existActions)
     }
