@@ -7,29 +7,68 @@ class XmlParsingServiceImpl implements ParsingService{
 
     /**
      * <persons>
-     *     <person name = 'Пупкин Морква Свеклович'>
-     *     <person age = 22/>
-     *     <person secretIdentity = '322-223'/>
-     *     <person powers>
-     *         <power 100/>
-     *         <power 50/>
-     *         <power 70/>
-     *     </powers>
+     *     <person>
+     *         <age>22</age>
+     *         <name>Пупкин Морква Свеклович</name>
+     *         <powers>
+     *             <power>100</power>
+     *             <power>50</power>
+     *             <power>70</power>
+     *         </powers>
+     *         <secretIdentity>322-223</secretIdentity>
+     *     </person>
      * </persons>
      * */
 
     @Override
     def createAndSave(Object o) {
-        return null
+        def writer = new FileWriter('./persons.xml')
+        def builder = new MarkupBuilder(writer)
+        parse(o, builder)
     }
 
     @Override
     def createAndPrint(Object o) {
-        return null
+        def builder = new MarkupBuilder()
+        parse(o, builder)
+        println(builder.toString())
     }
 
-    private parse(Object o){
-        def builder = new MarkupBuilder()
+    static def parse(Object o, MarkupBuilder builder){
+        LinkedHashMap dataMap = (LinkedHashMap) o.collect().collectEntries()
+        builder.persons{
+            if (!dataMap.isEmpty()) {
+                person {
+                    dataMap.forEach({ k, v ->
+                        String keyName = k.toString()
+                        if (isCollection(v)) {
+                            powers{
+                                    List list = (ArrayList) v
+                                    list.forEach( { el ->
+                                        power(el)
+                                    })
+                            }
+                        } else {
+                            if (keyName == 'age') {
+                                age(v)
+                            } else if (keyName == 'name') {
+                                name(v)
+                            } else if (keyName == 'secretIdentity') {
+                                secretIdentity(v)
+                            }
+                        }
+                    })
+                }
+            }
+        }
+    }
+
+    static boolean isCollection(Object o){
+        if (o.getClass() == ArrayList.class){
+            true
+        } else {
+            false
+        }
     }
 
 }

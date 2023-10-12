@@ -7,7 +7,7 @@ import ru.otus.service.impl.XmlParsingServiceImpl
 @Service
 class ParseService {
 
-    private final static String filePath = '/json.txt'
+    private final static String filePath = '/test.json'
     private final static String fileURL = 'https://github.com/Groovy-Developer/groovy-2023-07-hw/raw/main/test.json'
 
     private final JsonContentPrepare jsonContentPrepare
@@ -26,7 +26,8 @@ class ParseService {
         jsonContentPrepare.setFilePath(filePath)
         jsonContentPrepare.setFileURL(fileURL)
         jsonContentPrepare.createByURL()
-        jsonContentPrepare.getResult()
+        xmlParsingService.createAndSave(jsonContentPrepare.getResult())
+        xmlParsingService.createAndPrint(jsonContentPrepare.getResult())
     }
 
 
