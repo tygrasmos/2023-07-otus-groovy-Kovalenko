@@ -24,17 +24,17 @@ class XmlParsingServiceImpl implements ParsingService{
     def createAndSave(Object o) {
         def writer = new FileWriter('./persons.xml')
         def builder = new MarkupBuilder(writer)
-        parse(o, builder)
+        parseInXml(o, builder)
     }
 
     @Override
     def createAndPrint(Object o) {
         def builder = new MarkupBuilder()
-        parse(o, builder)
+        parseInXml(o, builder)
         println(builder.toString())
     }
 
-    static def parse(Object o, MarkupBuilder builder){
+    static def parseInXml(Object o, MarkupBuilder builder){
         LinkedHashMap dataMap = (LinkedHashMap) o.collect().collectEntries()
         builder.persons{
             if (!dataMap.isEmpty()) {

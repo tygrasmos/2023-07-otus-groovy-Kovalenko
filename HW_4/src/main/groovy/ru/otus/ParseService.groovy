@@ -26,8 +26,10 @@ class ParseService {
         jsonContentPrepare.setFilePath(filePath)
         jsonContentPrepare.setFileURL(fileURL)
         jsonContentPrepare.createByURL()
-        xmlParsingService.createAndSave(jsonContentPrepare.getResult())
-        xmlParsingService.createAndPrint(jsonContentPrepare.getResult())
+      //  xmlParsingService.createAndSave(jsonContentPrepare.getResult())
+      //  xmlParsingService.createAndPrint(jsonContentPrepare.getResult())
+        htmlParsingService.createAndSave(jsonContentPrepare.getResult())
+      //  htmlParsingService.createAndPrint(jsonContentPrepare.getResult())
     }
 
 
