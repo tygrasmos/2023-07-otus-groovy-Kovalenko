@@ -1,9 +1,11 @@
 package ru.otus.service
 
+import groovy.xml.MarkupBuilder
+
 interface ParsingService {
 
-    def createAndSave(Object o)
+    MarkupBuilder createAndSave(Object o)
 
-    def createAndPrint(Object o)
+    MarkupBuilder createAndPrint(Object o)
 
 }

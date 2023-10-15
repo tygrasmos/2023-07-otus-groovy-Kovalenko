@@ -1,4 +1,4 @@
-package ru.otus
+package ru.otus.prepare
 
 import groovy.json.JsonSlurper
 import org.springframework.stereotype.Service
