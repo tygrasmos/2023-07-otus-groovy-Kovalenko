@@ -5,7 +5,7 @@ import groovy.transform.Canonical
 import java.util.stream.Collectors
 
 @Canonical
-class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData<T> {
+class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     private final EntityClassMetaData<T> entityClassMetaData
 
     private final selectByIdQuery;

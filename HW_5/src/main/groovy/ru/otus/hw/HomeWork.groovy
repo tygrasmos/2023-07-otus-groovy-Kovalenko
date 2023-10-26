@@ -3,6 +3,8 @@ package ru.otus.hw
 import org.flywaydb.core.Flyway
 import org.slf4j.Logger
 import ru.otus.hw.datasource.DriverManagerDataSource
+import ru.otus.hw.mapper.EntityClassMetaDataImpl
+import ru.otus.hw.mapper.EntitySQLMetaDataImpl
 import ru.otus.hw.model.Client
 import ru.otus.hw.model.Manager
 import ru.otus.hw.repository.DataTemplateJdbc
@@ -15,9 +17,9 @@ import javax.sql.DataSource
 
 import static org.slf4j.LoggerFactory.getLogger
 
-final URL = "jdbc:postgresql://localhost:5430/demoDB"
-final USER = "usr"
-final PASSWORD = "pwd"
+final URL = "jdbc:postgresql://localhost:5432/demoDB"
+final USER = "postgres"
+final PASSWORD = "wermut00"
 
 final Logger log = getLogger(HomeWork.class)
 
@@ -30,9 +32,9 @@ def transactionRunner = new TransactionRunnerJdbc(dataSource);
 def dbExecutor = new DbExecutorImpl();
 
 // Работа с клиентом
-def entityClassMetaDataClient //= new EntityClassMetaDataImpl<>(Client.class);
-def entitySQLMetaDataClient //= new EntitySQLMetaDataImpl<>(entityClassMetaDataClient);
-def dataTemplateClient = new DataTemplateJdbc<>(
+def entityClassMetaDataClient = new EntityClassMetaDataImpl<>(Client.class);
+def entitySQLMetaDataClient = new EntitySQLMetaDataImpl<>(entityClassMetaDataClient);
+def dataTemplateClient = new DataTemplateJdbc(
         dbExecutor: dbExecutor,
         entitySQLMetaData: entitySQLMetaDataClient,
         entityClassMetaData: entityClassMetaDataClient); //реализация DataTemplate, универсальная
