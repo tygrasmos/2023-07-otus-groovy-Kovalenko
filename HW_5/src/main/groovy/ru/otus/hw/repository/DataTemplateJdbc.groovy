@@ -16,13 +16,27 @@ class DataTemplateJdbc implements DataTemplate {
 
     @Override
     def findById(Object connection, long id) {
+        def result = new Object()
+        dbExecutor.executeSelect((Connection) connection,
+                entitySQLMetaData.getSelectAllSql(),
+                new ArrayList<Object>(),
+                {
+                    result = it
+                }).get()
 
-        return null
+        (entityClassMetaData.getClass()) result
     }
 
     @Override
     List findAll( connection) {
-        connection
+        List result = new ArrayList()
+        dbExecutor.executeSelect((Connection) connection,
+                entitySQLMetaData.getSelectAllSql(),
+                new ArrayList<Object>(),
+                {
+                    result = it
+                }).get()
+        result
     }
 
     @Override
@@ -30,17 +44,15 @@ class DataTemplateJdbc implements DataTemplate {
         setFields(object)
         dbExecutor.executeStatement((Connection) connection,
                 entitySQLMetaData.getInsertSql(),
-                entityClassMetaData.getFieldsWithoutId())
+                entityClassMetaData.getAllFields())
     }
 
     @Override
     void update( connection,  object) {
         setFields(object)
-        connection {
-            dbExecutor.executeStatement((Connection) connection,
-                    entitySQLMetaData.getUpdateSql(),
-                    entityClassMetaData.getAllFields())
-        }
+        dbExecutor.executeStatement((Connection) connection,
+                entitySQLMetaData.getUpdateSql(),
+                entityClassMetaData.getAllFields())
     }
 
     def setFields(  object){

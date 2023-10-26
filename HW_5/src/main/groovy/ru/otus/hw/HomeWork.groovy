@@ -22,6 +22,7 @@ final PASSWORD = "pwd"
 final Logger log = getLogger(HomeWork.class)
 
 
+
 // Общая часть
 def dataSource = new DriverManagerDataSource(URL, USER, PASSWORD);
 flywayMigrations(dataSource);

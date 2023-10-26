@@ -10,12 +10,18 @@ class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     Class<T> clazz
 
     Field idField
-    List<Field> withoutIdFiles
+    List<Field> withoutIdFields
     Constructor<T> constructor
 
     EntityClassMetaDataImpl(Class<T> clazz) {
         this.clazz = clazz
         this.constructor = findFirstConstructorWithOutParameters()
+        this.withoutIdFields = clazz.getDeclaredFields().sort( f -> {
+            !f.isAnnotationPresent(Id.class)
+        })
+        this.idField = clazz.getDeclaredFields().sort(f -> {
+            f.isAnnotationPresent(Id.class)
+        }).first()
     }
 
     def findIdField() {
@@ -38,17 +44,11 @@ class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
 
     @Override
     List<Field> getAllFields() {
-        clazz.getDeclaredFields().findAll()
+        clazz.getDeclaredFields()
     }
 
     @Override
     List<Field> getFieldsWithoutId() {
-        if(findIdField()){
-            getAllFields().sort( f -> {
-                !f.isAnnotationPresent(Id.class)
-            })
-        } else {
-            getAllFields()
-        }
+        this.withoutIdFields
     }
 }
