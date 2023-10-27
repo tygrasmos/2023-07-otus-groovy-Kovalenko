@@ -27,9 +27,9 @@ class ReflectionUtility {
 
     static  <T> T useConstructor(Constructor<T> constructor) {
         try {
-            constructor.newInstance();
+            constructor.newInstance()
         } catch (ex) {
-            throw new EntityMetaDataException(ex.getMessage());
+            throw new EntityMetaDataException(ex.getMessage())
         }
     }
 }

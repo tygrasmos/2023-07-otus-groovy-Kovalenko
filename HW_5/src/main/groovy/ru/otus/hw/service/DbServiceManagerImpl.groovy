@@ -9,10 +9,10 @@ import ru.otus.hw.sessionmanager.TransactionRunner
 class DbServiceManagerImpl implements DBServiceManager {
     private static final Logger log = LoggerFactory.getLogger(DbServiceManagerImpl.class)
 
-    private final DataTemplate/*<Manager>*/ managerDataTemplate
+    private final DataTemplate managerDataTemplate
     private final TransactionRunner transactionRunner
 
-    DbServiceManagerImpl(TransactionRunner transactionRunner, DataTemplate/*<Manager>*/ managerDataTemplate) {
+    DbServiceManagerImpl(TransactionRunner transactionRunner, DataTemplate managerDataTemplate) {
         this.transactionRunner = transactionRunner
         this.managerDataTemplate = managerDataTemplate
     }
@@ -24,7 +24,7 @@ class DbServiceManagerImpl implements DBServiceManager {
                 def managerNo = managerDataTemplate.insert(connection, manager)
                 def createdManager = new Manager(managerNo, manager.getLabel(), manager.getParam1())
                 log.info("created manager: {}", createdManager)
-                createdManager
+                return createdManager
             }
             managerDataTemplate.update(connection, manager)
             log.info("updated manager: {}", manager)

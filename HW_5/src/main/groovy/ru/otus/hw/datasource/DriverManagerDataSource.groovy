@@ -17,69 +17,69 @@ class DriverManagerDataSource implements DataSource {
 
     @Override
     public Connection getConnection() throws SQLException {
-        return dataSourcePool.getConnection();
+        return dataSourcePool.getConnection()
     }
 
     @Override
     Connection getConnection(String username, String password) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException()
     }
 
     @Override
     PrintWriter getLogWriter() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException()
     }
 
     @Override
     void setLogWriter(PrintWriter out) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException()
 
     }
 
     @Override
     int getLoginTimeout() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException()
     }
 
     @Override
     void setLoginTimeout(int seconds) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException()
     }
 
     @Override
     Logger getParentLogger() {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException()
     }
 
     @Override
     <T> T unwrap(Class<T> iface) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException()
     }
 
     @Override
     boolean isWrapperFor(Class<?> iface) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException()
     }
 
     private void createConnectionPool(String url, String user, String pwd) {
-        def config = new HikariConfig();
+        def config = new HikariConfig()
         config.setJdbcUrl(url);
-        config.setConnectionTimeout(3000); //ms
-        config.setIdleTimeout(60000); //ms
-        config.setMaxLifetime(600000);//ms
-        config.setAutoCommit(false);
-        config.setMinimumIdle(5);
-        config.setMaximumPoolSize(10);
-        config.setPoolName("DemoHiPool");
-        config.setRegisterMbeans(true);
+        config.setConnectionTimeout(3000) //ms
+        config.setIdleTimeout(60000) //ms
+        config.setMaxLifetime(600000)//ms
+        config.setAutoCommit(false)
+        config.setMinimumIdle(5)
+        config.setMaximumPoolSize(10)
+        config.setPoolName("DemoHiPool")
+        config.setRegisterMbeans(true)
 
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.addDataSourceProperty("cachePrepStmts", "true")
+        config.addDataSourceProperty("prepStmtCacheSize", "250")
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048")
 
-        config.setUsername(user);
-        config.setPassword(pwd);
+        config.setUsername(user)
+        config.setPassword(pwd)
 
-        dataSourcePool = new HikariDataSource(config);
+        dataSourcePool = new HikariDataSource(config)
     }
 }

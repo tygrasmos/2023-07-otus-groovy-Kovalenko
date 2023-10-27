@@ -5,9 +5,9 @@ import ru.otus.hw.model.Client
 
 interface DBServiceClient {
 
-    Client saveClient(Client client);
+    Client saveClient(Client client)
 
-    Client getClient(long id);
+    Client getClient(long id)
 
-    List<Client> findAll();
+    List<Client> findAll()
 }

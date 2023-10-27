@@ -19,9 +19,9 @@ class ResultListMapper<T> implements Function<ResultSet, List<T>> {
     List<T> apply(ResultSet resultSet) {
         // GroovyRowResult
         try {
-            List<T> tList = new ArrayList<>();
+            List<T> tList = new ArrayList<>()
             while (resultSet.next()) {
-                T object = ReflectionUtility.useConstructor(entityClassMetaData.getConstructor());
+                T object = ReflectionUtility.useConstructor(entityClassMetaData.getConstructor())
                 for (Field f : entityClassMetaData.getAllFields()) {
                     ReflectionUtility.setValue(f, object, resultSet.getObject(f.getName()))
                 }

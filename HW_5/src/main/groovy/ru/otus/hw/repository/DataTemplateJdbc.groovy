@@ -3,14 +3,10 @@ package ru.otus.hw.repository
 import groovy.transform.Canonical
 import ru.otus.hw.ReflectionUtility
 import ru.otus.hw.mapper.EntityClassMetaData
-import ru.otus.hw.mapper.EntityClassMetaDataImpl
 import ru.otus.hw.mapper.EntitySQLMetaData
-import ru.otus.hw.mapper.EntitySQLMetaDataImpl
 import ru.otus.hw.mapper.ResultListMapper
 
 import java.sql.Connection
-import java.sql.ResultSet
-import java.util.stream.Collectors
 
 @Canonical
 class DataTemplateJdbc implements DataTemplate {
@@ -22,7 +18,7 @@ class DataTemplateJdbc implements DataTemplate {
     def findById(Object connection, long id) {
         List res = new ArrayList()
         dbExecutor.executeSelect((Connection) connection,
-                entitySQLMetaData.getSelectAllSql(),
+                entitySQLMetaData.getSelectByIdSql(),
                 new ArrayList<Object>(),
                 {
                    def mapper = new ResultListMapper(entityClassMetaData)
@@ -59,7 +55,7 @@ class DataTemplateJdbc implements DataTemplate {
                 getParams(object))
     }
 
-    List<Object> getParams( object){
+    List<Object> getParams( object) {
         List<Object> params = new ArrayList<>()
         entityClassMetaData.getAllFields().each {params.add(ReflectionUtility.getValueFromObjectByField(it, object))}
         params

@@ -24,26 +24,26 @@ class Manager {
     }
 
     Long getNo() {
-        return no;
+        return no
     }
 
     void setNo(Long no) {
-        this.no = no;
+        this.no = no
     }
 
     String getLabel() {
-        return label;
+        return label
     }
 
     void setLabel(String label) {
-        this.label = label;
+        this.label = label
     }
 
     String getParam1() {
-        return param1;
+        return param1
     }
 
     void setParam1(String param1) {
-        this.param1 = param1;
+        this.param1 = param1
     }
 }

@@ -31,7 +31,7 @@ class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
     def findIdField() {
         for (def field in clazz.getDeclaredFields()) {
             if(field.isAnnotationPresent(Id.class)) {
-                return true;
+                return true
             }
         }
         throw new EntityMetaDataException("@id not found for class ${getName()}")

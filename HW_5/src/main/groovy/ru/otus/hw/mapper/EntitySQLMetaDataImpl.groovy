@@ -16,7 +16,6 @@ class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
 
     EntitySQLMetaDataImpl(entityClassMetaData) {
         this.entityClassMetaData = entityClassMetaData
-        selectByIdQuery = "SELECT * FROM ${entityClassMetaData.getName()} WHERE ${entityClassMetaData.getIdField()} " + WHERE_CHARS
     }
 
     @Override
@@ -26,7 +25,7 @@ class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
 
     @Override
     String getSelectByIdSql() {
-        return selectByIdQuery
+        return "SELECT * FROM ${entityClassMetaData.getName()} WHERE ${entityClassMetaData.getIdField()} " + WHERE_CHARS
     }
 
     @Override
