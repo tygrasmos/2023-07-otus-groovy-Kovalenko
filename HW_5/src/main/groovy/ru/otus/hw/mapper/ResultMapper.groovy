@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 
 class ResultMapper<T> extends Closure<T> {
 
-    private final EntityClassMetaData<T> entityClassMetaData;
+  /*  private final EntityClassMetaData<T> entityClassMetaData;
 
     ResultMapper(Object owner, Object thisObject, EntityClassMetaData<T> entityClassMetaData) {
         super(owner, thisObject)
@@ -31,6 +31,13 @@ class ResultMapper<T> extends Closure<T> {
         } catch (ex) {
             throw new ResultMapperException(ex.getMessage());
         }
+    }*/
+
+    ResultMapper(Object owner, Object thisObject) {
+        super(owner, thisObject)
     }
 
+    ResultMapper(Object owner) {
+        super(owner)
+    }
 }

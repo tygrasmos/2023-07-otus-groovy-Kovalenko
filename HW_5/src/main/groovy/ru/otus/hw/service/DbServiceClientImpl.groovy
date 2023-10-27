@@ -10,10 +10,10 @@ import ru.otus.hw.sessionmanager.TransactionRunner
 class DbServiceClientImpl implements DBServiceClient {
     private static final Logger log = LoggerFactory.getLogger(DbServiceClientImpl.class)
 
-    private final DataTemplate<Client> dataTemplate
+    private final DataTemplate/*<Client>*/ dataTemplate
     private final TransactionRunner transactionRunner
 
-    DbServiceClientImpl(TransactionRunner transactionRunner, DataTemplate<Client> dataTemplate) {
+    DbServiceClientImpl(TransactionRunner transactionRunner, DataTemplate/*<Client>*/ dataTemplate) {
         this.transactionRunner = transactionRunner
         this.dataTemplate = dataTemplate
     }
@@ -25,12 +25,12 @@ class DbServiceClientImpl implements DBServiceClient {
                 def clientId = dataTemplate.insert(connection, client)
                 def createdClient = new Client(clientId, client.getName())
                 log.info("created client: {}", createdClient)
-                createdClient;
+                createdClient
             }
             dataTemplate.update(connection, client)
             log.info("updated client: {}", client)
             client
-        });
+        }) as Client
     }
 
     @Override
@@ -39,7 +39,7 @@ class DbServiceClientImpl implements DBServiceClient {
             def clientOptional = dataTemplate.findById(connection, id)
             log.info("client: {}", clientOptional)
             clientOptional
-        });
+        }) as Client
     }
 
     @Override
@@ -48,6 +48,6 @@ class DbServiceClientImpl implements DBServiceClient {
             def clientList = dataTemplate.findAll(connection)
             log.info("clientList:{}", clientList)
             clientList
-        });
+        }) as List<Client>
     }
 }

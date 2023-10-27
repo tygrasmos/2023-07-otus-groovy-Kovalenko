@@ -2,7 +2,7 @@ package ru.otus.hw.repository
 
 import java.sql.Connection
 
-interface DbExecutor<T> {
+interface DbExecutor {
 
     long executeStatement(Connection connection, String sql, List<Object> params);
 
