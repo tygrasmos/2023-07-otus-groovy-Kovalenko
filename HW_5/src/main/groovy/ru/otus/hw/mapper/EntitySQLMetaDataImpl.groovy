@@ -44,7 +44,7 @@ class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     }
 
     String getInsertValues(String value){
-        entityClassMetaData.getFieldsWithoutId().stream()
+        entityClassMetaData.getAllFields().stream()
                 .map(field -> value)
                 .collect(Collectors.joining(','))
     }
@@ -56,7 +56,7 @@ class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     }
 
     String getFieldsName(){
-        entityClassMetaData.getFieldsWithoutId().stream()
+        entityClassMetaData.getAllFields().stream()
                 .map(field -> field.getName())
                 .collect(Collectors.joining(','))
     }

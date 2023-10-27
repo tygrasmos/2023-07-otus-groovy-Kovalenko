@@ -41,7 +41,6 @@ class DataTemplateJdbc implements DataTemplate {
 
     @Override
     long insert( connection,  object) {
-        setFields(object)
         dbExecutor.executeStatement((Connection) connection,
                 entitySQLMetaData.getInsertSql(),
                 entityClassMetaData.getAllFields())
@@ -49,14 +48,13 @@ class DataTemplateJdbc implements DataTemplate {
 
     @Override
     void update( connection,  object) {
-        setFields(object)
         dbExecutor.executeStatement((Connection) connection,
                 entitySQLMetaData.getUpdateSql(),
                 entityClassMetaData.getAllFields())
     }
 
-    def setFields(  object){
-        entityClassMetaData = new EntityClassMetaDataImpl(object)
-        entitySQLMetaData = new EntitySQLMetaDataImpl(entityClassMetaData)
+    def getParams(Object object){
+        object.getMetaPropertyValues().findAll().stream()
+        //.filter(v -> v.get)
     }
 }
