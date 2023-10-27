@@ -8,8 +8,6 @@ import java.util.stream.Collectors
 class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     private final EntityClassMetaData<T> entityClassMetaData
 
-    private final selectByIdQuery;
-
     private final String UPDATE_CHARS = ' = ? '
     private final String INSERT_CHARS = ' ?'
     private final String WHERE_CHARS = '= ?'
