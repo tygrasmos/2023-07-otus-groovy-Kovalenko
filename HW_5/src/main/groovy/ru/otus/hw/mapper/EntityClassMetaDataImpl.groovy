@@ -58,7 +58,7 @@ class EntityClassMetaDataImpl<T> implements EntityClassMetaData<T> {
         this.withoutIdFields
     }
 
-    static def getEntityName(Class<T> clazz){
+    static def getEntityName(Class<?> clazz){
         String[] str = clazz.getName().split('\\.')
         StringBuilder name = new StringBuilder()
         for (int i = 1; i <= str.length; i++) {

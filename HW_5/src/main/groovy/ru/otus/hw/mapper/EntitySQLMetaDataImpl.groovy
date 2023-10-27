@@ -50,7 +50,7 @@ class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     }
 
     String getUpdateValues(String value){
-        entityClassMetaData.getFieldsWithoutId().stream()
+        entityClassMetaData.getAllFields().stream()
                 .map(field -> field.getName().concat(value))
                 .collect(Collectors.joining(','))
     }

@@ -25,7 +25,7 @@ class DbServiceClientImpl implements DBServiceClient {
                 def clientId = dataTemplate.insert(connection, client)
                 def createdClient = new Client(clientId, client.getName())
                 log.info("created client: {}", createdClient)
-                createdClient
+                 return createdClient
             }
             dataTemplate.update(connection, client)
             log.info("updated client: {}", client)

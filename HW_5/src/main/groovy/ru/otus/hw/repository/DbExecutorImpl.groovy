@@ -3,6 +3,7 @@ package ru.otus.hw.repository
 import ru.otus.hw.exception.DataBaseOperationException
 
 import java.sql.Connection
+import java.sql.ResultSet
 import java.sql.Statement
 
 class DbExecutorImpl implements DbExecutor {
@@ -11,7 +12,12 @@ class DbExecutorImpl implements DbExecutor {
     long executeStatement(Connection connection, String sql, List<Object> params) {
         try (def pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             for (def idx = 0; idx < params.size(); idx++) {
-                pst.setObject(idx + 1, params.get(idx))
+                def curParam = params.get(idx)
+                if (curParam == null) {
+                    pst.setObject(idx + 1, getNextValue(connection))
+                } else {
+                    pst.setObject(idx + 1, curParam)
+                }
             }
             pst.executeUpdate()
             try (def rs = pst.getGeneratedKeys()) {
@@ -35,5 +41,16 @@ class DbExecutorImpl implements DbExecutor {
         } catch (ex) {
             throw new DataBaseOperationException("executeSelect error", ex)
         }
+    }
+
+    static Long getNextValue(Connection connection){
+        try (ResultSet pst = connection.createStatement().executeQuery("select nextval('seq')")) {
+            if (pst.next()) {
+                pst.getLong(1)
+            }
+        } catch (ex) {
+            throw new DataBaseOperationException("sequence_exception", ex)
+        }
+
     }
 }
