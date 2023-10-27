@@ -25,7 +25,7 @@ class DataTemplateJdbc implements DataTemplate {
                 entitySQLMetaData.getSelectAllSql(),
                 new ArrayList<Object>(),
                 {
-                   def mapper = new ResultListMapper()
+                   def mapper = new ResultListMapper(entityClassMetaData)
                    res = mapper.apply(it) as List
                 }).get()
 
@@ -34,14 +34,15 @@ class DataTemplateJdbc implements DataTemplate {
 
     @Override
     List findAll( connection) {
-        List result = new ArrayList()
+        List res = new ArrayList()
         dbExecutor.executeSelect((Connection) connection,
                 entitySQLMetaData.getSelectAllSql(),
                 new ArrayList<Object>(),
                 {
-                    result = it
+                    def mapper = new ResultListMapper(entityClassMetaData)
+                    res = mapper.apply(it) as List
                 }).get()
-        result
+        res
     }
 
     @Override
