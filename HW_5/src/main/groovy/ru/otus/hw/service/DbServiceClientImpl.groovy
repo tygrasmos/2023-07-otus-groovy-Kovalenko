@@ -34,12 +34,12 @@ class DbServiceClientImpl implements DBServiceClient {
     }
 
     @Override
-    Client getClient(long id) {
+    Optional<Client> getClient(long id) {
         transactionRunner.doInTransaction(connection -> {
             def clientOptional = dataTemplate.findById(connection, id)
             log.info("client: {}", clientOptional)
             clientOptional
-        }) as Client
+        }) as Optional<Client>
     }
 
     @Override

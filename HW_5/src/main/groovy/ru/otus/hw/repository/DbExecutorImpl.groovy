@@ -13,7 +13,7 @@ class DbExecutorImpl implements DbExecutor {
         try (def pst = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             for (def idx = 0; idx < params.size(); idx++) {
                 def curParam = params.get(idx)
-                if (curParam == null) {
+                if (curParam == null && idx == 0) {
                     pst.setObject(idx + 1, getNextValue(connection))
                 } else {
                     pst.setObject(idx + 1, curParam)

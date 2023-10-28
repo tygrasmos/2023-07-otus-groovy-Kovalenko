@@ -7,7 +7,7 @@ interface DBServiceClient {
 
     Client saveClient(Client client)
 
-    Client getClient(long id)
+    Optional<Client> getClient(long id)
 
     List<Client> findAll()
 }

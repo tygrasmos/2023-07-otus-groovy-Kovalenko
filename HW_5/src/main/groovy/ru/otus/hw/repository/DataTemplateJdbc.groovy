@@ -19,11 +19,11 @@ class DataTemplateJdbc implements DataTemplate {
         List res = new ArrayList()
         dbExecutor.executeSelect((Connection) connection,
                 entitySQLMetaData.getSelectByIdSql(),
-                new ArrayList<Object>(),
+                List.of(id),
                 {
                    def mapper = new ResultListMapper(entityClassMetaData)
                    res = mapper.apply(it) as List
-                }).get()
+                })
 
         res.stream().findFirst()
     }
@@ -52,12 +52,19 @@ class DataTemplateJdbc implements DataTemplate {
     void update( connection,  object) {
         dbExecutor.executeStatement((Connection) connection,
                 entitySQLMetaData.getUpdateSql(),
-                getParams(object))
+                getParamsForUpdate(object))
     }
 
     List<Object> getParams( object) {
         List<Object> params = new ArrayList<>()
         entityClassMetaData.getAllFields().each {params.add(ReflectionUtility.getValueFromObjectByField(it, object))}
+        params
+    }
+
+    List<Object> getParamsForUpdate( object) {
+        List<Object> params = new ArrayList<>()
+        entityClassMetaData.getFieldsWithoutId().each {params.add(ReflectionUtility.getValueFromObjectByField(it, object))}
+        params.add(ReflectionUtility.getValueFromObjectByField(entityClassMetaData.getIdField(), object)) as List<Object>
         params
     }
 }

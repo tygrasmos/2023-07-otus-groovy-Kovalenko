@@ -9,10 +9,10 @@ import java.sql.SQLException
 import java.util.logging.Logger
 
 class DriverManagerDataSource implements DataSource {
-    private DataSource dataSourcePool;
+    private DataSource dataSourcePool
 
     DriverManagerDataSource(String url, String user, String pwd) {
-        createConnectionPool(url, user, pwd);
+        createConnectionPool(url, user, pwd)
     }
 
     @Override
@@ -63,7 +63,7 @@ class DriverManagerDataSource implements DataSource {
 
     private void createConnectionPool(String url, String user, String pwd) {
         def config = new HikariConfig()
-        config.setJdbcUrl(url);
+        config.setJdbcUrl(url)
         config.setConnectionTimeout(3000) //ms
         config.setIdleTimeout(60000) //ms
         config.setMaxLifetime(600000)//ms

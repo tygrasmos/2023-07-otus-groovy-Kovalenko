@@ -7,23 +7,25 @@ CREATE TABLE Manager (
     no int PRIMARY KEY,
     label varchar(50)
 )*/
+/*DROP TABLE IF EXISTS Client;*/
 CREATE TABLE Client
 (
-    id int
+    id bigint
         constraint client_pk
             primary key,
-    name varchar(50)
+    name varchar(255)
 );
-
+/*DROP TABLE IF EXISTS Manager;*/
 CREATE TABLE Manager
 (
-    no int
+    no bigint
         constraint manager_pk
             primary key,
-    label varchar(50),
-    param1 varchar(20)
+    label varchar(255),
+    param1 varchar(255)
 );
 
+/*DROP SEQUENCE IF EXISTS seq;*/
 CREATE SEQUENCE seq
     INCREMENT 1
  MINVALUE 1

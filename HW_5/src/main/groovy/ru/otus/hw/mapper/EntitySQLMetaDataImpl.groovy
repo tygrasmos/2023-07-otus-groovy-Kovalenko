@@ -23,7 +23,7 @@ class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
 
     @Override
     String getSelectByIdSql() {
-        return "SELECT * FROM ${entityClassMetaData.getName()} WHERE ${entityClassMetaData.getIdField()} " + WHERE_CHARS
+        return "SELECT * FROM ${entityClassMetaData.getName()} WHERE ${entityClassMetaData.getIdField().getName()} " + WHERE_CHARS
     }
 
     @Override
@@ -37,7 +37,7 @@ class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     String getUpdateSql() {
         "UPDATE ${entityClassMetaData.getName()} " +
                 "SET ${getUpdateValues(UPDATE_CHARS)} " +
-                "WHERE ${entityClassMetaData.getIdField()} " + WHERE_CHARS
+                "WHERE ${entityClassMetaData.getIdField().getName()} " + WHERE_CHARS
     }
 
     String getInsertValues(String value){
@@ -47,7 +47,7 @@ class EntitySQLMetaDataImpl<T> implements EntitySQLMetaData {
     }
 
     String getUpdateValues(String value){
-        entityClassMetaData.getAllFields().stream()
+        entityClassMetaData.getFieldsWithoutId().stream()
                 .map(field -> field.getName().concat(value))
                 .collect(Collectors.joining(','))
     }
