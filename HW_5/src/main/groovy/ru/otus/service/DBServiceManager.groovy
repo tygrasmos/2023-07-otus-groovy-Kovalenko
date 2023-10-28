@@ -1,6 +1,6 @@
 package ru.otus.service
 
-import ru.otus.hw.model.Manager
+import ru.otus.model.Manager
 
 
 interface DBServiceManager {
