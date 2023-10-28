@@ -17,14 +17,16 @@ import javax.sql.DataSource
 
 import static org.slf4j.LoggerFactory.getLogger
 
-final URL = "jdbc:postgresql://localhost:5432/demoDB"
-final USER = "postgres"
-final PASSWORD = "wermut00"
-
 final Logger log = getLogger(HomeWork.class)
 
+PropertiesReader reader = new PropertiesReader()
+final URL = reader.getProperties().getProperty('url')
+final USERNAME = reader.getProperties().getProperty('username')
+final PASSWORD = reader.getProperties().getProperty('password')
+
+
 // Общая часть
-def dataSource = new DriverManagerDataSource(URL, USER, PASSWORD)
+def dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD)
 flywayMigrations(dataSource)
 def transactionRunner = new TransactionRunnerJdbc(dataSource)
 def dbExecutor = new DbExecutorImpl()
@@ -87,6 +89,7 @@ log.info(">>>Last manager after update::{}", managerAfterUpdate)
 //println(" >>>Last manager after update: " + managerAfterUpdate)
 //println("Все!!!!------------------------>")
 log.info("-------------------------- БАБУШКА ПРИЕХАЛА!!!! ------------------------------")
+
 private static void flywayMigrations(DataSource dataSource) {
     def logger = getLogger(HomeWork.class)
     logger.info("db migration started...")
