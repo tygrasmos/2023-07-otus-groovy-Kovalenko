@@ -2,4 +2,5 @@ rootProject.name = 'otus_test'
 include 'HW_2'
 include 'HW_3'
 include 'HW_4'
+include 'HW_5'
 
